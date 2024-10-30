@@ -28,6 +28,11 @@ public class XGo {
         byte[] ivsize = String.valueOf(xKey.getIvsize()).getBytes(StandardCharsets.UTF_8);
         byte[] password = xKey.getPassword().getBytes(StandardCharsets.UTF_8);
 
+        XJava xJava = XJava.instance;
+        byte[] javaVersion = xJava.getVersion().getBytes(StandardCharsets.UTF_8);
+        byte[] javaMD5 = "unknown".equals(xJava.getJavaMD5()) ? xJava.getJavaMD5().getBytes(StandardCharsets.UTF_8) : XKit.hexToByte(xJava.getJavaMD5());
+        byte[] javaSHA1 = "unknown".equals(xJava.getJavaSHA1()) ? xJava.getJavaSHA1().getBytes(StandardCharsets.UTF_8) : XKit.hexToByte(xJava.getJavaSHA1());
+
         Map<String, String> variables = new HashMap<>();
         variables.put("xJar.md5", convert(md5));
         variables.put("xJar.sha1", convert(sha1));
@@ -35,8 +40,12 @@ public class XGo {
         variables.put("xKey.keysize", convert(keysize));
         variables.put("xKey.ivsize", convert(ivsize));
         variables.put("xKey.password", convert(password));
+        variables.put("xJava.javaversion", convert(javaVersion));
+        variables.put("xJava.javamd5", convert(javaMD5));
+        variables.put("xJava.javasha1", convert(javaSHA1));
 
-        List<String> templates = Arrays.asList("xjar.go", "xjar_agentable.go");
+        // List<String> templates = Arrays.asList("xjar.go", "xjar_bak.go", "xjar_agentable.go");
+        List<String> templates = Arrays.asList("xjar.go");
         for (String template : templates) {
             URL url = XGo.class.getClassLoader().getResource("xjar/" + template);
             if (url == null) {

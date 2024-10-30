@@ -9,6 +9,7 @@ import io.xjar.key.XSymmetricSecureKey;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -389,6 +390,24 @@ public abstract class XKit implements XConstants {
             }
             return hash.digest();
         }
+    }
+
+    /**
+     * 将字节数组转换为十六进制字符串
+     */
+    public static String bytesToHex(byte[] bytes) {
+        StringBuilder hex = new StringBuilder();
+        for (byte b : bytes) {
+            hex.append(String.format("%02X", b));
+        }
+        return hex.toString();
+    }
+
+    /**
+     * 将十六进制字符串转换为字节数组
+     */
+    public static byte[] hexToByte(String hexString) {
+        return DatatypeConverter.parseHexBinary(hexString);
     }
 
 }

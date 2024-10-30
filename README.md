@@ -20,18 +20,18 @@ JDK 1.7 +
 ```xml
 <project>
     <!-- 设置 jitpack.io 仓库 -->
-    <repositories>
+    <!-- <repositories>
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-    </repositories>
+    </repositories> -->
     <!-- 添加 XJar 依赖 -->
     <dependencies>
         <dependency>
-            <groupId>com.github.core-lib</groupId>
+            <groupId>com.github.ily433664</groupId>
             <artifactId>xjar</artifactId>
-            <version>4.0.2</version>
+            <version>4.0.3-FORK</version>
             <!-- <scope>test</scope> -->
         </dependency>
     </dependencies>
@@ -188,7 +188,7 @@ xjar java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED -jar /path/to/en
             <plugin>
                 <groupId>com.github.core-lib</groupId>
                 <artifactId>xjar-maven-plugin</artifactId>
-                <version>4.0.2</version>
+                <version>4.0.3-FORK</version>
                 <executions>
                     <execution>
                         <goals>
@@ -214,6 +214,9 @@ xjar java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED -jar /path/to/en
                             <sourceJar/>
                             <targetDir/>
                             <targetJar/>
+                            <javaVersion/>
+                            <javaMD5/>
+                            <javaSHA1/>
                             -->
                         </configuration>
                     </execution>
@@ -255,13 +258,20 @@ mvn clean install -Dxjar.password=io.xjar -Dxjar.targetDir=/directory/to/save/ta
 | targetJar | -Dxjar.targetJar | 目标jar名称 | String | ${project.build.finalName}.xjar | 文件名称 |
 | includes | -Dxjar.includes | 需要加密的资源路径表达式 | String[] | 无 | io/xjar/** , mapper/*Mapper.xml , 支持Ant表达式 |
 | excludes | -Dxjar.excludes | 无需加密的资源路径表达式 | String[] | 无 | static/** , META-INF/resources/** , 支持Ant表达式 |
+| javaVersion | -Dxjar.javaVersion | 指定Java启动器的版本 | String | unknown | unknown 为不限制, 1.8, 11, 17 |
+| javaMD5 | -Dxjar.javaMD5 | 指定Java启动器的MD5值 | String | unknown | unknown 为不限制, 7AA59FF41A4E08D15726111593765A32 |
+| javaSHA1 | -Dxjar.javaSHA1 | 指定Java启动器的SHA1值 | String | unknown | unknown 为不限制, 95DF76BC133F2796C991F8C7893B16D45851D78F |
 
-* 指定加密算法的时候密钥长度以及向量长度必须在算法可支持范围内, 具体加密算法的密钥及向量长度请自行百度或谷歌.
-* 当 includes 和 excludes 同时使用时即加密在includes的范围内且排除了excludes的资源.
+* 指定加密算法的时候密钥长度以及向量长度必须在算法可支持范围内, 具体加密算法的密钥及向量长度请自行百度或谷歌。
+* 当 includes 和 excludes 同时使用时即加密在includes的范围内且排除了excludes的资源。
+* javaVersion 为使用 java 命令获取到的版本号。
+* javaMD5 和 javaSHA1 为使用 java 命令获取的启动器的MD5和SHA1值。
 
 更多文档：[xjar-maven-plugin](https://github.com/core-lib/xjar-maven-plugin)
 
 ## 版本记录
+* 4.0.3-FORK
+    1. 增加项目启动时校验jdk的版本、md5、sha1功能
 * 4.0.2
     1. 安全性升级
 * 4.0.1

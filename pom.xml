@@ -6,7 +6,7 @@
 
     <groupId>io.github.ily433664</groupId>
     <artifactId>xjar</artifactId>
-    <version>4.0.2</version>
+    <version>4.0.3-FORK</version>
 
     <name>xjar</name>
     <description>Spring Boot JAR 安全加密运行工具, 同时支持的原生JAR</description>
@@ -83,6 +83,12 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <additionalJOptions>
+                        <!-- 忽略未知标签的警告 -->
+                        <additionalJOption>-Xdoclint:none</additionalJOption>
+                    </additionalJOptions>
+                </configuration>
             </plugin>
             <!-- gpg插件 -->
             <plugin>
